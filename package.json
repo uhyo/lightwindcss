@@ -1,0 +1,16 @@
+{
+  "name": "lightwindcss",
+  "version": "1.0.0",
+  "description": "Write light CSS in the right way.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "uhyo <uhyo@uhy.ooo>",
+  "license": "MIT",
+  "devDependencies": {
+    "prettier": "^2.2.1",
+    "typescript": "^4.2.0-beta"
+  }
+}
