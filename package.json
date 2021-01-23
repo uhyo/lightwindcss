@@ -2,15 +2,23 @@
   "name": "lightwindcss",
   "version": "1.0.0",
   "description": "Write light CSS in the right way.",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "uhyo <uhyo@uhy.ooo>",
   "license": "MIT",
   "devDependencies": {
+    "@types/react": "^17.0.0",
+    "@types/stylis": "^4.0.0",
     "prettier": "^2.2.1",
     "typescript": "^4.2.0-beta"
+  },
+  "dependencies": {
+    "stylis": "^4.0.6"
   }
 }
