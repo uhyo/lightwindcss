@@ -1,6 +1,5 @@
-import Head from "next/head";
-import styles from "../styles/Home.module.css";
 import { css } from "lightwindcss";
+import Head from "next/head";
 
 export default function Home() {
   return (
@@ -30,16 +29,12 @@ export default function Home() {
         `}
       >
         <h1
-          className={
-            styles.title +
-            " " +
-            css`
-              margin: 0;
-              line-height: 1.15;
-              font-size: 4rem;
-              text-align: center;
-            `
-          }
+          className={css`
+            margin: 0;
+            line-height: 1.15;
+            font-size: 4rem;
+            text-align: center;
+          `}
         >
           Welcome to{" "}
           <a
@@ -47,6 +42,12 @@ export default function Home() {
             className={css`
               color: #0070f3;
               text-decoration: none;
+
+              &:hover,
+              &:focus,
+              &:active {
+                text-decoration: underline;
+              }
             `}
           >
             Next.js!
@@ -77,43 +78,50 @@ export default function Home() {
         </p>
 
         <div
-          className={
-            styles.grid +
-            " " +
-            css`
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              flex-wrap: wrap;
-              max-width: 800px;
-              margin-top: 3rem;
-            `
-          }
+          className={css`
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 800px;
+            margin-top: 3rem;
+
+            @media (max-width: 600px) {
+              width: 100%;
+              flex-direction: column;
+            }
+          `}
         >
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
+          <a href="https://nextjs.org/docs" className={card}>
+            <h3 className={cardTitle}>Documentation &rarr;</h3>
+            <p className={cardDesc}>
+              Find in-depth information about Next.js features and API.
+            </p>
           </a>
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
+          <a href="https://nextjs.org/learn" className={card}>
+            <h3 className={cardTitle}>Learn &rarr;</h3>
+            <p className={cardDesc}>
+              Learn about Next.js in an interactive course with quizzes!
+            </p>
           </a>
 
           <a
             href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
+            className={card}
           >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
+            <h3 className={cardTitle}>Examples &rarr;</h3>
+            <p className={cardDesc}>
+              Discover and deploy boilerplate example Next.js projects.
+            </p>
           </a>
 
           <a
             href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
+            className={card}
           >
-            <h3>Deploy &rarr;</h3>
-            <p>
+            <h3 className={cardTitle}>Deploy &rarr;</h3>
+            <p className={cardDesc}>
               Instantly deploy your Next.js site to a public URL with Vercel.
             </p>
           </a>
@@ -121,18 +129,14 @@ export default function Home() {
       </main>
 
       <footer
-        className={
-          styles.footer +
-          " " +
-          css`
-            width: 100%;
-            height: 100px;
-            border-top: 1px solid #eaeaea;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          `
-        }
+        className={css`
+          width: 100%;
+          height: 100px;
+          border-top: 1px solid #eaeaea;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        `}
       >
         <a
           href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
@@ -148,17 +152,43 @@ export default function Home() {
           <img
             src="/vercel.svg"
             alt="Vercel Logo"
-            className={
-              styles.logo +
-              " " +
-              css`
-                margin-left: 0.5em;
-                height: 1em;
-              `
-            }
+            className={css`
+              margin-left: 0.5em;
+              height: 1em;
+            `}
           />
         </a>
       </footer>
     </div>
   );
 }
+
+const card = css`
+  margin: 1rem;
+  flex-basis: 45%;
+  padding: 1.5rem;
+  text-align: left;
+  color: inherit;
+  text-decoration: none;
+  border: 1px solid #eaeaea;
+  border-radius: 10px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: #0070f3;
+    border-color: #0070f3;
+  }
+`;
+
+const cardTitle = css`
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
+`;
+
+const cardDesc = css`
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1.5;
+`;
