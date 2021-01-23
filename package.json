@@ -4,6 +4,7 @@
   "description": "Write light CSS in the right way.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "sideEffects": false,
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch",
@@ -13,12 +14,14 @@
   "author": "uhyo <uhyo@uhy.ooo>",
   "license": "MIT",
   "devDependencies": {
+    "@types/md5": "^2.2.1",
     "@types/react": "^17.0.0",
     "@types/stylis": "^4.0.0",
     "prettier": "^2.2.1",
     "typescript": "^4.2.0-beta"
   },
   "dependencies": {
+    "md5": "^2.3.0",
     "stylis": "^4.0.6"
   }
 }

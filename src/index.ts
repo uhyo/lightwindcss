@@ -1,7 +1,6 @@
-import type { CSSProperties } from "react";
-import { convertCSSStringToObject } from "./convertCSSStringToObject";
+import { convertCSSStringToStyle } from "./convertCSSStringToStyle";
 
-const cache = new WeakMap<TemplateStringsArray, CSSProperties>();
+const cache = new WeakMap<TemplateStringsArray, string>();
 
 /**
  * Convert given CSS string to a style object.
@@ -9,13 +8,13 @@ const cache = new WeakMap<TemplateStringsArray, CSSProperties>();
 export function css(
   arr: TemplateStringsArray,
   ..._args: readonly never[]
-): CSSProperties {
+): string {
   const c = cache.get(arr);
   if (c) {
     return c;
   }
 
-  const result = convertCSSStringToObject(arr[0] || "");
-  cache.set(arr, result);
-  return result;
+  const { style, className } = convertCSSStringToStyle(arr[0] || "");
+  cache.set(arr, className);
+  return className;
 }
