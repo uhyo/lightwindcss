@@ -4,7 +4,6 @@ const cache = new WeakMap<TemplateStringsArray, string>();
 const registry =
   typeof FinalizationRegistry !== "undefined"
     ? new FinalizationRegistry((heldValue: HTMLStyleElement) => {
-        console.log("cleaning", heldValue);
         heldValue.remove();
       })
     : undefined;

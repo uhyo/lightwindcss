@@ -24,14 +24,12 @@ export function analyzeReference(
   }
   // Currently we only support no hole template literals
   const cssStr = String(parentPath.node.quasi.quasis[0]?.value.cooked);
-  console.log(cssStr);
 
   const ast = compile(cssStr);
 
   for (const elm of ast) {
     analyzeStylisElement(elm, context, "");
   }
-  console.log(context.kvCount);
 }
 
 function analyzeStylisElement(
