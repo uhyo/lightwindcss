@@ -34,6 +34,10 @@ export default function Home() {
             line-height: 1.15;
             font-size: 4rem;
             text-align: center;
+
+            section > & {
+              color: hi;
+            }
           `}
         >
           Welcome to{" "}

@@ -2,13 +2,15 @@ import fastGlob from "fast-glob";
 import { writeFile } from "fs/promises";
 import path from "path";
 import { AnalyzeContext } from "./context";
-import { generate } from "./generate";
+import { generate, GenerateResult } from "./generate";
 import { parseFile } from "./parseFile";
 
 type Options = {
   srcDir: string;
   out: string;
 };
+
+export type AnalyzeResult = GenerateResult;
 
 export async function analyze({ srcDir, out }: Options) {
   const context: AnalyzeContext = {
