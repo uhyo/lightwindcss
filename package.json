@@ -14,6 +14,11 @@
   "keywords": [],
   "author": "uhyo <uhyo@uhy.ooo>",
   "license": "MIT",
+  "files": [
+    "dist",
+    "src",
+    "babel.js"
+  ],
   "devDependencies": {
     "@types/babel__traverse": "^7.11.0",
     "@types/md5": "^2.2.1",
