@@ -1,69 +1,22 @@
 import { Node, NodePath } from "@babel/traverse";
-import { compile, Element } from "stylis";
+import { analyzeStylisElement } from "../../ast/analyzeStylisElement";
+import { parseCss } from "../../ast/parseCss";
 import { updateMap } from "../../util/updateMap";
-import {
-  AnalyzeContext,
-  CONTEXT_DELIMITER,
-  RULESET_DELIMITER,
-} from "./context";
+import { AnalyzeContext, CONTEXT_DELIMITER } from "./context";
 
 export function analyzeReference(
   reference: NodePath<Node>,
   context: AnalyzeContext
 ) {
-  // Support css`...` calls
-  if (!reference.isIdentifier()) {
+  const res = parseCss(reference);
+  if (!res) {
     return;
   }
-  const { parentPath } = reference;
-  if (!parentPath.isTaggedTemplateExpression()) {
-    return;
-  }
-  if (parentPath.node.tag !== reference.node) {
-    return;
-  }
-  // Currently we only support no hole template literals
-  const cssStr = String(parentPath.node.quasi.quasis[0]?.value.cooked);
 
-  const ast = compile(cssStr);
-
-  for (const elm of ast) {
-    analyzeStylisElement(elm, context, "");
-  }
-}
-
-function analyzeStylisElement(
-  element: Element,
-  context: AnalyzeContext,
-  ruleContext: string
-) {
-  // TODO: stylis typing is not very good
-  switch (element.type) {
-    case "decl": {
-      // prop: value;
-      const key = `${ruleContext}${CONTEXT_DELIMITER}${element.props}${CONTEXT_DELIMITER}${element.children}`;
+  for (const elm of res.ast) {
+    for (const [ruleContext, prop, value] of analyzeStylisElement(elm)) {
+      const key = `${ruleContext}${CONTEXT_DELIMITER}${prop}${CONTEXT_DELIMITER}${value}`;
       updateMap(context.kvCount, key, 0, (c) => c + 1);
-      break;
-    }
-    case "rule": {
-      // selector { ... }
-      const nextRuleContext = `${ruleContext}${RULESET_DELIMITER}${element.value}`;
-      for (const c of element.children as Element[]) {
-        analyzeStylisElement(c, context, nextRuleContext);
-      }
-      break;
-    }
-    case "comm": {
-      // ignore comments
-      break;
-    }
-    default: {
-      // @media and else
-      // @media (...) { ... }
-      const nextRuleContext = `${ruleContext}${RULESET_DELIMITER}${element.value}`;
-      for (const c of element.children as Element[]) {
-        analyzeStylisElement(c, context, nextRuleContext);
-      }
     }
   }
 }

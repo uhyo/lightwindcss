@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import yargs from "yargs/yargs";
 import { analyze } from "./analyze";
 import { generate } from "./generate";
