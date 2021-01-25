@@ -1,10 +1,11 @@
 {
   "name": "lightwindcss",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Write light CSS in the right way.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "sideEffects": false,
+  "bin": "dist/cli/index.js",
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch",
@@ -14,14 +15,21 @@
   "author": "uhyo <uhyo@uhy.ooo>",
   "license": "MIT",
   "devDependencies": {
+    "@types/babel__traverse": "^7.11.0",
     "@types/md5": "^2.2.1",
     "@types/react": "^17.0.0",
     "@types/stylis": "^4.0.0",
+    "@types/yargs": "^15.0.12",
     "prettier": "^2.2.1",
     "typescript": "^4.2.0-beta"
   },
   "dependencies": {
+    "@babel/parser": "^7.12.11",
+    "@babel/traverse": "^7.12.12",
+    "@babel/types": "^7.12.12",
+    "fast-glob": "^3.2.5",
     "md5": "^2.3.0",
-    "stylis": "^4.0.6"
+    "stylis": "^4.0.6",
+    "yargs": "^16.2.0"
   }
 }
