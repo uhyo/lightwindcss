@@ -7,6 +7,7 @@ import { findCssReferences } from "../ast/findCssReferences";
 import { parseCss } from "../ast/parseCss";
 import { AnalyzeResult } from "../cli/analyze";
 import { CONTEXT_DELIMITER } from "../cli/analyze/context";
+import { iterJoin } from "../util/iter/iterJoin";
 
 type PluginThis = {
   opts: {
@@ -54,7 +55,7 @@ const plugin = function (babel: PluginInput): PluginResult {
           if (!res) {
             continue;
           }
-          const classNames: string[] = [];
+          const classNames = new Set<string>();
           for (const c of res.ast) {
             for (const k of analyzeStylisElement(c)) {
               const key = k.join(CONTEXT_DELIMITER);
@@ -64,11 +65,11 @@ const plugin = function (babel: PluginInput): PluginResult {
                   "Could not find className for this."
                 );
               }
-              classNames.push(className);
+              classNames.add(className);
             }
           }
           res.replacePath.replaceWith(
-            types.stringLiteral(classNames.join(" "))
+            types.stringLiteral(iterJoin(classNames, " "))
           );
         }
       },

@@ -1,11 +1,17 @@
+import { Splitter } from "../../util/Splitter";
+
 export const CONTEXT_DELIMITER = "::::";
 
 export const RULESET_DELIMITER = "$$$$";
 
+// context:prop:value
+type NodeKey = `${string}${typeof CONTEXT_DELIMITER}${string}${typeof CONTEXT_DELIMITER}${string}`;
+
 export type AnalyzeContext = {
-  // context:prop:value
-  kvCount: Map<
-    `${string}${typeof CONTEXT_DELIMITER}${string}${typeof CONTEXT_DELIMITER}${string}`,
-    number
+  nodes: Splitter<
+    NodeKey,
+    {
+      count: number;
+    }
   >;
 };

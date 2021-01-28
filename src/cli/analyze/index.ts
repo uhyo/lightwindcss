@@ -1,6 +1,7 @@
 import fastGlob from "fast-glob";
 import { writeFile } from "fs/promises";
 import path from "path";
+import { Splitter } from "../../util/Splitter";
 import { AnalyzeContext } from "./context";
 import { generate, GenerateResult } from "./generate";
 import { parseFile } from "./parseFile";
@@ -14,7 +15,15 @@ export type AnalyzeResult = GenerateResult;
 
 export async function analyze({ srcDir, out }: Options) {
   const context: AnalyzeContext = {
-    kvCount: new Map(),
+    nodes: new Splitter({
+      createPayload: () => ({ count: 1 }),
+      splitPayload: ({ count }) => [
+        {
+          count: count + 1,
+        },
+        { count },
+      ],
+    }),
   };
   const cwd = path.resolve(srcDir);
   for await (const file of fastGlob.stream("**/*.{js,jsx,ts,tsx}", {

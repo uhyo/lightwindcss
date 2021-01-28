@@ -7,9 +7,9 @@ export type GenerateResult = {
    */
   ruleContextMap: Record<string, string[]>;
   /**
-   * Map from classname to declaration.
+   * Map from classname and ruleContext to declaration.
    */
-  classnameMap: Record<string, string>;
+  classnameMap: Record<string, Record<string, string>>;
   /**
    * Map from declaration to classname.
    */
@@ -20,36 +20,43 @@ export type GenerateResult = {
  * Generate analysis result.
  */
 export function generate(context: AnalyzeContext): GenerateResult {
-  const entries = Array.from(context.kvCount.entries());
+  const entries = Array.from(context.nodes.entries());
   // sort desc by occurences
-  entries.sort((a, b) => b[1] - a[1]);
+  entries.sort((a, b) => b.payload.count - a.payload.count);
 
   // assign classnames
   const classnameGenerator = generateClassnames();
   const ruleContextMap: Record<string, string[]> = Object.create(null);
-  const classnameMap: Record<string, string> = Object.create(null);
+  const classnameMap: Record<string, Record<string, string>> = Object.create(
+    null
+  );
   const declarationMap: Record<string, string> = Object.create(null);
 
-  for (const [key] of entries) {
-    const [ruleContext, decl, value] = key.split(CONTEXT_DELIMITER) as [
-      string,
-      string,
-      string
-    ];
+  for (const node of entries) {
     const assignedClassnameRes = classnameGenerator.next();
     if (assignedClassnameRes.done) {
       // unreachable
       throw new Error("Cannot assign more classnames");
     }
     const assignedClassname = assignedClassnameRes.value;
-    const a = ruleContextMap[ruleContext];
-    if (a) {
-      a.push(assignedClassname);
-    } else {
-      ruleContextMap[ruleContext] = [assignedClassname];
+    const declPerContext: Record<string, string> = {};
+    classnameMap[assignedClassname] = declPerContext;
+    for (const key of node.keys) {
+      const [ruleContext, decl, value] = key.split(CONTEXT_DELIMITER) as [
+        string,
+        string,
+        string
+      ];
+      const a = ruleContextMap[ruleContext];
+      if (a) {
+        a.push(assignedClassname);
+      } else {
+        ruleContextMap[ruleContext] = [assignedClassname];
+      }
+      declPerContext[ruleContext] =
+        (declPerContext[ruleContext] || "") + `${decl}:${value};`;
+      declarationMap[key] = assignedClassname;
     }
-    classnameMap[assignedClassname] = `${decl}:${value};`;
-    declarationMap[key] = assignedClassname;
   }
 
   return {

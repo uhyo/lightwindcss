@@ -21,7 +21,7 @@ export async function generate({ input, out }: Options) {
       .filter((x) => x !== "");
     const wrapper = convertRulesetsToWrapper(rulesets);
     for (const c of classes) {
-      result += wrapper(c, classnameMap[c] || "");
+      result += wrapper(c, classnameMap[c]?.[ruleContext] || "");
     }
   }
   await writeFile(path.resolve(out), result);
