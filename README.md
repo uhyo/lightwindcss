@@ -74,6 +74,8 @@ npm i -D lightwindcss
 Wrap your plain CSS string with `` css` ... ` `` to get classNames for it.
 
 ```tsx
+import { css } from "lightwindcss";
+
 <div
   className={css`
     min-height: 100vh;
@@ -85,7 +87,7 @@ Wrap your plain CSS string with `` css` ... ` `` to get classNames for it.
   `}
 >
   Hello, world!
-</div>
+</div>;
 ```
 
 During development, this works without extra configuration.
