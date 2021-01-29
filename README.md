@@ -1,4 +1,4 @@
-![Lightwind CSS](./docs/images/lightwindcss-logo.png)
+<img src="./docs/images/lightwindcss-logo.png" alt="Lightwind CSS" width="559">
 
 ## What?
 
