@@ -1,6 +1,6 @@
 {
   "name": "lightwindcss",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Write light CSS in the right way.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
